@@ -1,1 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordcount-app-deployment
+spec:
+  replicas: 2  # Set the number of replicas (scale up or down)
+  selector:
+    matchLabels:
+      app: wordcount-app
+  template:
+    metadata:
+      labels:
+        app: wordcount-app
+    spec:
+      containers:
+      - name: wordcount-container
+        image: wordcount-app:latest  # Use the image you built
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: data-volume
+          mountPath: /home/data/output
+      volumes:
+      - name: data-volume
+        emptyDir: {}
 
